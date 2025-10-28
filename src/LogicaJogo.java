@@ -129,6 +129,6 @@ public class LogicaJogo {
         } while (!classeEscolhida);
 
         // Criação do jogador com atributos escolhidos
-        jogador = new Jogador(nome, hp, 0, ataque, defesa, mana);
+        jogador = new Jogador(nome, classe, hp, 0, ataque, defesa, mana);
     }
 }
