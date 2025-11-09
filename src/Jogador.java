@@ -1,8 +1,8 @@
-import java.util.HashMap;
+import java.util.Map;
 
 public class Jogador extends Personagem {
 
-    private HashMap<String, Integer> inventario;
+    private Inventario inventario;
     public String[] upgradesAtk = {"Força", "Poder", "Força Divina"};
     public String[] upgradesDef = {"Ossos Pesados", "Passos Rápidos", "Aura Divina"};
     public int numUpgradesAtk;
@@ -12,7 +12,6 @@ public class Jogador extends Personagem {
     // Construtor
     public Jogador(String nome, String classeEscolhida, int maxHp, int xp, int danoAtaque, int poderDefesa, int mana) {
         super(nome, maxHp, xp, danoAtaque, poderDefesa, mana); // agora respeita os valores passados
-        inventario = new HashMap<>();
         this.numUpgradesAtk = 0;
         this.numUpgradesDef = 0;
         this.classeEscolhida = classeEscolhida;
@@ -39,6 +38,20 @@ public class Jogador extends Personagem {
 
         int input = LogicaJogo.lerInt("-> ", 2);
         LogicaJogo.limparTerminal();
+        LogicaJogo.imprimirCabecalho("Escolha um conjunto de itens iniciais:");
+        System.out.println("(1) CONJUNTO OFENSIVO - 1 Poção de Cura e 1 Poção de Força");
+        System.out.println("(2) CONJUNTO DEFENSIVO -1 Poção de Cura e 1 Poção de Defesa");
+        System.out.println("(3) CONJUNTO BALANCEADO - 2 Poção de Cura e 1 Poção de Mana");
+        int inputConjunto = LogicaJogo.lerInt("-> ", 2);
+        if (inputConjunto == 1) {
+            this.inventario = new Inventario(Conjuntos.CONJOFENSIVO);
+        } else if (inputConjunto == 2) {
+            this.inventario = new Inventario(Conjuntos.CONJDEFENSIVO);
+        } else {
+            this.inventario = new Inventario(Conjuntos.CONJBALANCEADO);
+        }
+
+        LogicaJogo.limparTerminal();
 
         if (input == 1) {
             LogicaJogo.imprimirCabecalho("Você escolheu " + upgradesATK[numUpgradesAtk] + "!");
@@ -50,21 +63,20 @@ public class Jogador extends Personagem {
             setPoderDefesa(getPoderDefesa() + 3); // aumenta defesa
         }
 
-        LogicaJogo.insiraAlgoParaContinuar();
-    }
+        
 
-    public void adicionarItem(String nomeItem, int quantidade) {
-        inventario.put(nomeItem, inventario.getOrDefault(nomeItem, 0) + quantidade);
+        LogicaJogo.insiraAlgoParaContinuar();
     }
 
     public void mostrarInventario() {
         LogicaJogo.limparTerminal();
         LogicaJogo.imprimirCabecalho("Inventário de " + getNome());
-        if (inventario.isEmpty()) {
+
+        if (inventario.getQuantidadeItens() == null) {
             System.out.println("Seu inventário está vazio.");
         } else {
-            for (String item : inventario.keySet()) {
-                System.out.println(item + " x" + inventario.get(item));
+            for ( Map.Entry<String, Integer> item : inventario.getQuantidadeItens().entrySet()) {  
+                System.out.println(item.getKey() + ": " + item.getValue() );
             }
         }
         LogicaJogo.insiraAlgoParaContinuar();
