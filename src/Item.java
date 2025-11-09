@@ -1,4 +1,4 @@
-public class Item {
+public class Item implements java.io.Serializable{
     public String nome;
     public Efeito efeito;
     public int poder;

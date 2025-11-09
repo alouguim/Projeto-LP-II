@@ -1,6 +1,6 @@
 import java.util.HashMap;
 
-public class Personagem {
+public class Personagem implements java.io.Serializable{
 
     private String nome;
     private int maxHp, hp, xp;

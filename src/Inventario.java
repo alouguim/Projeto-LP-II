@@ -1,55 +1,49 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Inventario {
-    
-    public String tipo;
-    public Alvo alvo;
+public class Inventario implements java.io.Serializable {
+
     public ArrayList<String> conjuntoItem = new ArrayList<>();
-    public ArrayList<Item> itens;
+    public ArrayList<Item> itens = new ArrayList<>();
     private HashMap<String, Integer> quantidadeItens = new HashMap<>();
 
     public Inventario(Conjuntos conjuntoItem){
         switch (conjuntoItem) {
             case CONJOFENSIVO:
-                this.conjuntoItem.add("pocaoForca");
-                this.conjuntoItem.add("pocaoCura");
-                this.itens.add(new Item("pocaoCura"));
-                this.itens.add(new Item("pocaoForca"));
-                for (Item item : itens) {
-                    quantidadeItens.put(item.getNome(), 1);
-                }
+                this.conjuntoItem.add("PocaoForca");
+                this.conjuntoItem.add("PocaoCura");
+
+                itens.add(new Item("PocaoCura"));
+                itens.add(new Item("PocaoForca"));
                 break;
+
             case CONJDEFENSIVO:
-                this.conjuntoItem.add("pocaDefesa");
-                this.conjuntoItem.add("pocaoCura");
-                this.itens.add(new Item("pocaoDefesa"));
-                this.itens.add(new Item("pocaoCura"));
-                for (Item item : itens) {
-                    quantidadeItens.put(item.getNome(), 1);
-                }
-                break;            
+                this.conjuntoItem.add("PocaoDefesa");
+                this.conjuntoItem.add("PocaoCura");
+
+                itens.add(new Item("PocaoDefesa"));
+                itens.add(new Item("PocaoCura"));
+                break;
+
             case CONJBALANCEADO:
-                this.conjuntoItem.add("pocaoMana");
-                this.conjuntoItem.add("pocaoCura");
-                this.conjuntoItem.add("pocaoCura");
-                this.itens.add(new Item("pocaoCura"));
-                this.itens.add(new Item("pocaoCura"));
-                this.itens.add(new Item("pocaoMana"));
-                for (Item item : itens) {
-                    quantidadeItens.put(item.getNome(), 1);
-                }
+                this.conjuntoItem.add("PocaoMana");
+                this.conjuntoItem.add("PocaoCura");
+                this.conjuntoItem.add("PocaoCura");
+
+                itens.add(new Item("PocaoCura"));
+                itens.add(new Item("PocaoCura"));
+                itens.add(new Item("PocaoMana"));
                 break;
-            default:
-                break;
+        }
+
+        // Preenche HashMap
+        for (Item item : itens) {
+            quantidadeItens.put(item.getNome(), quantidadeItens.getOrDefault(item.getNome(), 0) + 1);
         }
     }
 
     public HashMap<String, Integer> getQuantidadeItens() {
-        if (quantidadeItens.isEmpty()){
-            return null;
-        }
-        return quantidadeItens;
+        return quantidadeItens.isEmpty() ? null : quantidadeItens;
     }
 
     public Item usarItem(String nome){
@@ -57,7 +51,7 @@ public class Inventario {
             if (itemUsado.getNome().equals(nome)) {
                 int atual = quantidadeItens.getOrDefault(nome, 0);
                 if (atual == 0){
-                    System.out.println("Não existe nenhum item " + nome + "restando no Inventário.");
+                    System.out.println("Não existe nenhum item " + nome + " restando no Inventário.");
                     return null;
                 }
                 quantidadeItens.put(nome, atual - 1);
@@ -65,9 +59,8 @@ public class Inventario {
             }
         }
         return null;
-    };
+    }
 }
-
 
 // Inventario - > Pessoa escolhe o tipo de conjunto de itens iniciais
 // Conjuntos:

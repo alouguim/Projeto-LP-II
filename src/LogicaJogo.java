@@ -46,6 +46,79 @@ public class LogicaJogo {
         System.out.println("\nInsira algo para continuar...");
         scanner.next();
     }
+    
+    public static void menuInicial() {
+        while (true) {
+            limparTerminal();
+            imprimirCabecalho("MENU INICIAL");
+
+            int opcao = 0;
+
+            if (SavePersonagens.temPersonagens()) {
+                System.out.println("(1) Continuar jogando");
+                System.out.println("(2) Criar novo personagem");
+                System.out.println("(3) Mostrar personagens");
+                System.out.println("(4) Deletar personagem");
+                System.out.println("(5) Sair");
+                opcao = lerInt("-> ", 5);
+            } else {
+                System.out.println("(1) Criar novo personagem");
+                System.out.println("(2) Mostrar personagens (vazio)");
+                System.out.println("(3) Sair");
+
+                int escolha = lerInt("-> ", 3);
+                if (escolha == 1) opcao = 2;
+                if (escolha == 2) opcao = 3;
+                if (escolha == 3) opcao = 5;
+            }
+
+            switch (opcao) {
+
+                case 1 -> { // Continuar
+                    limparTerminal();
+                    imprimirCabecalho("Escolha o personagem:");
+                    String nomeEscolhido = SavePersonagens.listarEEscolherPersonagem();
+                    if (nomeEscolhido != null) {
+                        jogador = SavePersonagens.buscarPersonagem(nomeEscolhido);
+                        if (jogador != null) {
+                            imprimirCabecalho("Personagem carregado!");
+                            insiraAlgoParaContinuar();
+                            return;
+                        }
+                    }
+                }
+
+                case 2 -> { // Novo personagem
+                    comecarJogo();
+                    return;
+                }
+
+                case 3 -> { // Mostrar
+                    limparTerminal();
+                    imprimirCabecalho("Personagens Salvos");
+                    SavePersonagens.listarPersonagens();
+                    insiraAlgoParaContinuar();
+                }
+
+                case 4 -> { // Deletar
+                    limparTerminal();
+                    imprimirCabecalho("Excluir personagem");
+                    String nome = SavePersonagens.listarEEscolherPersonagem();
+                    if (nome != null) {
+                        SavePersonagens.deletarPersonagem(nome);
+                        imprimirCabecalho("Personagem removido!");
+                    }
+                    insiraAlgoParaContinuar();
+                }
+
+                case 5 -> { // Sair
+                    limparTerminal();
+                    System.out.println("Até a próxima!");
+                    System.exit(0);
+                }
+            }
+        }
+    }
 
     // método principal para começar o jogo
     public static void comecarJogo() {
@@ -130,5 +203,6 @@ public class LogicaJogo {
 
         // Criação do jogador com atributos escolhidos
         jogador = new Jogador(nome, classe, hp, 0, ataque, defesa, mana);
-    }
+        SavePersonagens.criarPersonagem(jogador);
+    }   
 }

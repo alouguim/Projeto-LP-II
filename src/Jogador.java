@@ -28,6 +28,10 @@ public class Jogador extends Personagem {
         return getPoderDefesa();
     }
 
+    public String getClasse(){
+        return classeEscolhida;
+    }
+
     public void escolherTraits(Personagem classe) {
         LogicaJogo.limparTerminal();
         LogicaJogo.imprimirCabecalho("Escolha uma característica:");
