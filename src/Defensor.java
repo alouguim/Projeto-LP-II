@@ -11,6 +11,8 @@ public class Defensor extends Personagem {
 
     public Defensor(String nome,int maxHp, int xp, int danoAtaque, int poderDefesa, int mana){
         super(nome, maxHp, xp, danoAtaque, poderDefesa, mana);
+        adicionarAtaqueFisico("Porrada Segura", 15);
+        adicionarMagia("Ressonância de Escudo", 20);
     }
 
     public static String[] getUpgradesAtk(){
@@ -21,6 +23,9 @@ public class Defensor extends Personagem {
         return upgradesDef;
     }
 
+    public int getCustoMagia() {
+        return 15;
+    }
 
     public void setMaxHp(int maxHp) {
         if (maxHp <= 0) {

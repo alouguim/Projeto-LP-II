@@ -36,7 +36,13 @@ public class LogicaJogo {
         System.out.println();
     }
 
+    public static void imprimirPersonagem(){
+    System.out.println("Nome: " + LogicaJogo.jogador.getNome());
+        System.out.println("Classe: " + LogicaJogo.jogador.getClasse() + "\nHP " + LogicaJogo.jogador.getHp() + "\nAtaque "
+        + LogicaJogo.jogador.getDanoAtaque() + "\nDefesa " + LogicaJogo.jogador.getPoderDefesa() + "\nMana: " + LogicaJogo.jogador.getMana());
+}
     public static void imprimirCabecalho(String titulo) {
+        LogicaJogo.limparTerminal();
         imprimirSeparador(30);
         System.out.println(titulo);
         imprimirSeparador(30);

@@ -115,6 +115,14 @@ public class Personagem implements java.io.Serializable{
         magias.put(nome, dano);
     }
 
+    public String getNomeAtaque(){
+        return ataquesFisicos.keySet().iterator().next();
+    }
+
+    public String getNomeMagia(){
+        return magias.keySet().iterator().next();
+    }
+
     public void atacar(Personagem alvo, String nomeAtaque) {
         int dano = this.danoAtaque + ataquesFisicos.get(nomeAtaque) - alvo.getPoderDefesa();
         if (dano < 0) {
@@ -127,6 +135,7 @@ public class Personagem implements java.io.Serializable{
     public void usarMagia(Personagem alvo, String nomeMagia, int custoMana) {
         if (this.mana < custoMana) {
             System.out.println(this.nome + " não tem mana suficiente para usar esta magia ");
+            return;
         }
 
         int dano = magias.get(nomeMagia);

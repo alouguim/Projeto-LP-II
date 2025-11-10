@@ -5,6 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "type": "java",
+            "name": "App",
+            "request": "launch",
+            "mainClass": "App",
+            "projectName": "Projeto-LP-II_d950f178"
+        },
+        {
             "type": "jdk",
             "request": "launch",
             "name": "Launch Java App"
