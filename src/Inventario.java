@@ -10,29 +10,29 @@ public class Inventario implements java.io.Serializable {
     public Inventario(Conjuntos conjuntoItem){
         switch (conjuntoItem) {
             case CONJOFENSIVO:
-                this.conjuntoItem.add("PocaoForca");
-                this.conjuntoItem.add("PocaoCura");
+                this.conjuntoItem.add("pocaoForca");
+                this.conjuntoItem.add("pocaoCura");
 
-                itens.add(new Item("PocaoCura"));
-                itens.add(new Item("PocaoForca"));
+                itens.add(new Item("pocaoCura"));
+                itens.add(new Item("pocaoForca"));
                 break;
 
             case CONJDEFENSIVO:
-                this.conjuntoItem.add("PocaoDefesa");
-                this.conjuntoItem.add("PocaoCura");
+                this.conjuntoItem.add("pocaoDefesa");
+                this.conjuntoItem.add("pocaoCura");
 
-                itens.add(new Item("PocaoDefesa"));
-                itens.add(new Item("PocaoCura"));
+                itens.add(new Item("pocaoDefesa"));
+                itens.add(new Item("pocaoCura"));
                 break;
 
             case CONJBALANCEADO:
-                this.conjuntoItem.add("PocaoMana");
-                this.conjuntoItem.add("PocaoCura");
-                this.conjuntoItem.add("PocaoCura");
+                this.conjuntoItem.add("pocaoMana");
+                this.conjuntoItem.add("pocaoCura");
+                this.conjuntoItem.add("pocaoCura");
 
-                itens.add(new Item("PocaoCura"));
-                itens.add(new Item("PocaoCura"));
-                itens.add(new Item("PocaoMana"));
+                itens.add(new Item("pocaoCura"));
+                itens.add(new Item("pocaoCura"));
+                itens.add(new Item("pocaoMana"));
                 break;
         }
 

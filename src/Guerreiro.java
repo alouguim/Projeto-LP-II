@@ -11,6 +11,12 @@ public class Guerreiro extends Personagem {
 
     public Guerreiro(String nome,int maxHp, int xp, int danoAtaque, int poderDefesa, int mana){
         super(nome, maxHp, xp, danoAtaque, poderDefesa, mana);
+        adicionarAtaqueFisico("Corte de Espada", 20);
+        adicionarMagia("Espada de Aura", 30);
+    }
+
+    public int getCustoMagia() {
+        return 20;
     }
 
     public static String[] getUpgradesAtk(){
