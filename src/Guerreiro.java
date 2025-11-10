@@ -15,7 +15,7 @@ public class Guerreiro extends Personagem {
         adicionarMagia("Espada de Aura", 30);
     }
 
-    public int getCustoMagia() {
+    public static int getCustoMagia() {
         return 20;
     }
 

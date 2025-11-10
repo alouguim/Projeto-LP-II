@@ -17,7 +17,8 @@ public class Jogador extends Personagem {
         this.numUpgradesDef = 0;
         this.classeEscolhida = classeEscolhida;
         Personagem classe = Classe.atribuirClasse(TipoClasse.valueOf(classeEscolhida.toUpperCase()),nome, maxHp,xp,danoAtaque, poderDefesa, mana);
-        escolherTraits(classe);
+        this.classe = classe;
+        escolherTraits(this.classe);
     }
 
     public int atacar() {
@@ -28,16 +29,20 @@ public class Jogador extends Personagem {
         return getPoderDefesa();
     }
 
-    public String getClasse(){
+    public String getClasseString(){
         return classeEscolhida;
     }
 
-    // public int getCustoMana(){
-    //     return this.classe.
-    // }
+    public Personagem getClasseObj() {
+        return this.classe;
+    }
+
+    public int getCustoMana(Personagem classe){
+        int poderRequisitado = Classe.getCustoMana(TipoClasse.valueOf(classe.toString()));
+        return poderRequisitado;
+    }
 
     public void escolherTraits(Personagem classe) {
-        this.classe = classe;
         LogicaJogo.imprimirCabecalho("Escolha uma característica:");
         String upgradesATK[] = Classe.getUpgrades(1, TipoClasse.valueOf(classeEscolhida.toUpperCase()));
         String upgradesDEF[] = Classe.getUpgrades(2, TipoClasse.valueOf(classeEscolhida.toUpperCase()));
@@ -56,25 +61,45 @@ public class Jogador extends Personagem {
         }
         LogicaJogo.limparTerminal();
         LogicaJogo.imprimirCabecalho("Escolha um conjunto de itens iniciais:");
-        System.out.println("(1) CONJUNTO OFENSIVO - 1 Poção de Cura e 1 Poção de Força");
-        System.out.println("(2) CONJUNTO DEFENSIVO -1 Poção de Cura e 1 Poção de Defesa");
-        System.out.println("(3) CONJUNTO BALANCEADO - 2 Poção de Cura e 1 Poção de Mana");
-        int inputConjunto = LogicaJogo.lerInt("-> ", 2);
         String conjuntoString = "";
-        if (inputConjunto == 1) {
-            this.inventario = new Inventario(Conjuntos.CONJOFENSIVO);
-            conjuntoString = "Conjunto Ofensivo!";
-        } else if (inputConjunto == 2) {
-            this.inventario = new Inventario(Conjuntos.CONJDEFENSIVO);
-            conjuntoString = "Conjunto Defensivo!";
-        } else {
-            this.inventario = new Inventario(Conjuntos.CONJBALANCEADO);
-            conjuntoString = "Conjunto Balanceado!";
-        }
+        boolean respostaValida = false;
+        while (!respostaValida) {
+            System.out.println("(1) CONJUNTO OFENSIVO - 1 Poção de Cura e 1 Poção de Força");
+            System.out.println("(2) CONJUNTO DEFENSIVO -1 Poção de Cura e 1 Poção de Defesa");
+            System.out.println("(3) CONJUNTO BALANCEADO - 2 Poção de Cura e 1 Poção de Mana");
+            int inputConjunto = LogicaJogo.lerInt("-> ", 3);
         
+        try {
+            switch (inputConjunto) {
+            case 1:
+                this.inventario = new Inventario(Conjuntos.CONJOFENSIVO);
+                conjuntoString = "Conjunto Ofensivo!";
+                respostaValida = true;
+                break;
+            case 2:
+                this.inventario = new Inventario(Conjuntos.CONJDEFENSIVO);
+                conjuntoString = "Conjunto Defensivo!";                
+                respostaValida = true;
+                break;
+            case 3:
+                this.inventario = new Inventario(Conjuntos.CONJBALANCEADO);
+                conjuntoString = "Conjunto Balanceado!";                
+                respostaValida = true;
+                break;
+            default:
+                throw new IllegalArgumentException("Essa Opção não existe!");
+        }
+        } catch (Exception e) {
+            System.out.println("Tente novamente.");
+        }
+        }   
         LogicaJogo.imprimirCabecalho("Você escolheu o " + conjuntoString + "!");
         LogicaJogo.insiraAlgoParaContinuar();
+        LogicaJogo.imprimirCabecalho("Personagem criado com sucesso");
+        LogicaJogo.insiraAlgoParaContinuar();
     }
+    
+    
 
     public void mostrarInventario() {
         LogicaJogo.imprimirCabecalho("Inventário de " + getNome());

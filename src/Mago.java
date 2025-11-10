@@ -12,7 +12,7 @@ public class Mago extends Personagem {
     public Mago(String nome,int maxHp, int xp, int danoAtaque, int poderDefesa, int mana){
         super(nome, maxHp, xp, danoAtaque, poderDefesa, mana);
         adicionarAtaqueFisico("Golpe de Cajado", 5);
-        adicionarMagia("Míssil Mágico", 40);
+        adicionarMagia("Relâmpago", 60);
     }
     
     public static String[] getUpgradesAtk(){
@@ -23,7 +23,7 @@ public class Mago extends Personagem {
         return upgradesDef;
     }
 
-    public int getCustoMagia() {
+    public static int getCustoMagia() {
         return 20;
     }
     
