@@ -68,6 +68,23 @@ public class Classe{
       }
    }
 
+   public static int getCustoMana(TipoClasse classe){
+      int custoMana;
+      switch (classe) {
+         case MAGO:
+            custoMana = Mago.getCustoMagia();
+            return custoMana;
+         case GUERREIRO:
+            custoMana = Guerreiro.getCustoMagia();
+            return custoMana;
+         case DEFENSOR:
+            custoMana = Defensor.getCustoMagia();
+
+         default:
+               throw new IllegalArgumentException("Classe não existente: " + classe);
+      }
+   }
+
    public String getClasse() {
       return classe;
    }

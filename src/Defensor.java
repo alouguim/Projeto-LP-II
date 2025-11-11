@@ -11,8 +11,8 @@ public class Defensor extends Personagem {
 
     public Defensor(String nome,int maxHp, int xp, int danoAtaque, int poderDefesa, int mana){
         super(nome, maxHp, xp, danoAtaque, poderDefesa, mana);
-        adicionarAtaqueFisico("Porrada Segura", 15);
-        adicionarMagia("Ressonância de Escudo", 20);
+        adicionarAtaqueFisico("Porrada de Escudo", 5 + this.poderDefesa);
+        adicionarMagia("Ressonância de Escudo", 40);
     }
 
     public static String[] getUpgradesAtk(){
@@ -23,7 +23,7 @@ public class Defensor extends Personagem {
         return upgradesDef;
     }
 
-    public int getCustoMagia() {
+    public static int getCustoMagia() {
         return 15;
     }
 

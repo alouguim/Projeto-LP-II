@@ -50,7 +50,7 @@ public class SavePersonagens {
 
         for (Map.Entry<String, Jogador> e : banco.entrySet()) {
             Jogador j = e.getValue();
-            System.out.println("- " + j.getNome() + " (Classe: " + j.getClasse() + ")");
+            System.out.println("- " + j.getNome() + " (Classe: " + j.getClasseString() + ")");
         }
     }
 
@@ -62,7 +62,7 @@ public class SavePersonagens {
 
         for (int i = 0; i < nomes.length; i++) {
             Jogador j = banco.get(nomes[i]);
-            System.out.println("(" + (i + 1) + ") " + nomes[i] + " (Classe: " + j.getClasse() + ")");
+            System.out.println("(" + (i + 1) + ") " + nomes[i] + " (Classe: " + j.getClasseString() + ")");
         }
 
         int escolha = LogicaJogo.lerInt("-> ", nomes.length);

@@ -1,17 +1,16 @@
-import java.util.ArrayList;
 import java.util.random.*;
 
 public class JogoProgressao {
     private Jogador jogador;
+    private Inimigo inimigo;
     private int dia = 1;
-    private ArrayList<String> tipoEncontro = new ArrayList<>();
-    private ArrayList<String> tipoMotivo = new ArrayList<>();
-    private ArrayList<TipoInimigo> tipoInimigo = new ArrayList<>();
+    private String[] tipoEncontro  = {"encontra ","esbarra em ", "passa por ", "tropeça em "};
+    private String[] tipoMotivo = {"não gostar da sua cara ", "motivo nenhum", "estar de mau humor ", "odiar sua existência ", "um rancor do passado "};
+    private TipoInimigo[] tipoInimigo = {TipoInimigo.GOBLIN,TipoInimigo.LEPRECHAUM,TipoInimigo.ORC,TipoInimigo.TROLL,TipoInimigo.DEMONIO,TipoInimigo.VELHAMALDOSA};
 
 
     public JogoProgressao(Jogador jogador) {
         this.jogador = jogador;
-        cicloJogo(this.jogador);
     }
 
     public void cicloJogo(Jogador jogador){
@@ -21,32 +20,32 @@ public class JogoProgressao {
         do {
             TipoInimigo diaAtual = imprimirDia();
             LogicaJogo.insiraAlgoParaContinuar();
-            Inimigo inimigo;
 
             switch (diaAtual) {
                 case GOBLIN:
-                    inimigo = new Inimigo(diaAtual.toString(), 30, 10, 5, 10 );
+                    inimigo = new Inimigo(diaAtual.toString(), 20, 5, 5, 10 );
                     break;
                 case LEPRECHAUM:
-                    inimigo = new Inimigo(diaAtual.toString(), 30, 5, 10, 10 );
+                    inimigo = new Inimigo(diaAtual.toString(), 20, 3, 15, 10 );
                     break;
                 case VELHAMALDOSA:
-                    inimigo = new Inimigo(diaAtual.toString(), 30, 5, 5, 10 );
+                    inimigo = new Inimigo(diaAtual.toString(), 20, 4, 5, 10 );
                     break;
                 case ORC:
-                    inimigo = new Inimigo(diaAtual.toString(), 50, 10, 10, 30 );
+                    inimigo = new Inimigo(diaAtual.toString(), 40, 8, 80, 30 );
                     break;
                 case TROLL:
-                    inimigo = new Inimigo(diaAtual.toString(), 100, 15, 20, 40 );
+                    inimigo = new Inimigo(diaAtual.toString(), 70, 10, 15, 40 );
                     break;
                 case DEMONIO:
-                    inimigo = new Inimigo(diaAtual.toString(), 200, 25, 30, 50 );
+                    inimigo = new Inimigo(diaAtual.toString(), 140, 15, 25, 10 );
                     break;
                 default:
                     break;
-            }
+            };
 
-
+            batalha(jogador, inimigo);
+            dia += 1;
 
         } while (jogador.getHp() > 0);
     }
@@ -60,59 +59,64 @@ public class JogoProgressao {
         int numeroAleatorioInimigo = numeroAleatorio.nextInt(5);
 
         System.out.println("Dia " + dia + ": Você "
-        + this.tipoEncontro.get(numeroAleatorioEncontro)
-        + this.tipoInimigo.get(numeroAleatorioInimigo).toString() + "! Por "
-        + this.tipoMotivo.get(numeroAleatorioMotivo)
+        + this.tipoEncontro[numeroAleatorioEncontro]
+        + this.tipoInimigo[numeroAleatorioInimigo].toString() + "! Por "
+        + this.tipoMotivo[numeroAleatorioMotivo]
         + "uma batalha começa, prepare-se!");
 
-        return this.tipoInimigo.get(numeroAleatorioInimigo);
+        return this.tipoInimigo[numeroAleatorioInimigo];
     }
 
-    public void inicializarArrays(){
-        this.tipoEncontro.add("encontra ");
-        this.tipoEncontro.add("esbarra em ");
-        this.tipoEncontro.add("passa por ");
-        this.tipoEncontro.add("tropeça em ");
+    // public void inicializarArrays(){
 
-        this.tipoMotivo.add("não gostar da sua cara ");
-        this.tipoMotivo.add("motivo nenhum" );
-        this.tipoMotivo.add("estar de mau humor ");
-        this.tipoMotivo.add("odiar sua existência ");
-        this.tipoMotivo.add("um rancor do passado ");
 
-        this.tipoInimigo.add(TipoInimigo.GOBLIN);
-        this.tipoInimigo.add(TipoInimigo.LEPRECHAUM);
-        this.tipoInimigo.add(TipoInimigo.ORC);
-        this.tipoInimigo.add(TipoInimigo.TROLL);
-        this.tipoInimigo.add(TipoInimigo.DEMONIO);
-        this.tipoInimigo.add(TipoInimigo.VELHAMALDOSA);
-    }
+    // }
 
     public void batalha(Jogador jogador, Inimigo inimigo){
         do {
             LogicaJogo.limparTerminal();
-            System.out.println("Sua ação! Como você ataca?");
+            LogicaJogo.imprimirCabecalho("Sua ação! Como você ataca?");
+            escolherAcao(jogador, inimigo);
+            LogicaJogo.insiraAlgoParaContinuar();
+            LogicaJogo.imprimirCabecalho("Ação do seu inimigo!");
+            inimigo.atacar(jogador, inimigo.getAtaquePadrao());
+            LogicaJogo.insiraAlgoParaContinuar();
         } while (jogador.getHp() > 0 || inimigo.getHp() > 0);
+        
+        if (jogador.getHp() <= 0) {
+            LogicaJogo.imprimirCabecalho("Você retornou para o abraço da Deusa..");
+            LogicaJogo.insiraAlgoParaContinuar();
+            LogicaJogo.menuInicial();
+        } else {
+            LogicaJogo.imprimirCabecalho(inimigo.getNome() + " foi enviado de volta para a Deusa! Você vive para ver mais um dia.. ");
+        }
     }
 
     public void escolherAcao(Jogador jogador, Inimigo inimigo) {
-        System.out.println("(1) Ataque normal");
-        System.out.println("(2) Usar Magia");
-        int input = LogicaJogo.lerInt("-> ", 2);
-        try {
-            // switch (input) {
-            //     case 1:
-            //         jogador.atacar(inimigo, jogador.getNomeAtaque());
-            //         break;
-            //     case 2:
-            //         jogador.usarMagia(inimigo, jogador.getNomeMagia(), jogador.);
-            //         break;
-            //     default:
-            //         throw new IllegalArgumentException("Essa opção não existe!");
-            // }
-        } catch (Exception IllegalArgumentException) {
-            escolherAcao(jogador, inimigo);
-            return;
+        Personagem classeJogador = jogador.getClasseObj();
+        boolean respostaValida = false;
+        int input;
+
+        while (!respostaValida) {
+            System.out.println("(1) Ataque normal");
+            System.out.println("(2) Usar Magia");
+            input = LogicaJogo.lerInt("-> ", 3);
+            try {
+            switch (input) {
+                case 1:
+                    jogador.atacar(inimigo, jogador.getNomeAtaque());
+                    respostaValida = true;
+                    break;
+                case 2:
+                    jogador.usarMagia(inimigo, jogador.getNomeMagia(), jogador.getCustoMana(classeJogador));
+                    respostaValida = true;
+                    break;
+                default:
+                    System.out.println("Essa opção não existe!");
+            }
+        } catch (Exception e) {
+            System.out.println("Tente novamente!");
         }
+    } 
     }
 }

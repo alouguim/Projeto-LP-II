@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 public class LogicaJogo {
 
-    static Scanner scanner = new Scanner(System.in);
+    public static final Scanner scanner = new Scanner(System.in);
     public static Jogador jogador; // jogador declarado como estático
 
     // pega inputs do usuario
@@ -38,7 +38,7 @@ public class LogicaJogo {
 
     public static void imprimirPersonagem(){
     System.out.println("Nome: " + LogicaJogo.jogador.getNome());
-        System.out.println("Classe: " + LogicaJogo.jogador.getClasse() + "\nHP " + LogicaJogo.jogador.getHp() + "\nAtaque "
+        System.out.println("Classe: " + LogicaJogo.jogador.getClasseString() + "\nHP " + LogicaJogo.jogador.getHp() + "\nAtaque "
         + LogicaJogo.jogador.getDanoAtaque() + "\nDefesa " + LogicaJogo.jogador.getPoderDefesa() + "\nMana: " + LogicaJogo.jogador.getMana());
 }
     public static void imprimirCabecalho(String titulo) {
@@ -89,7 +89,8 @@ public class LogicaJogo {
                         if (jogador != null) {
                             imprimirCabecalho("Personagem carregado!");
                             insiraAlgoParaContinuar();
-                            return;
+                            JogoProgressao jogo = new JogoProgressao(jogador);
+                            jogo.cicloJogo(jogador);
                         }
                     }
                 }
@@ -171,24 +172,24 @@ public class LogicaJogo {
             switch (input) {
                 case 1 -> { // Guerreiro
                     classe = "Guerreiro";
-                    hp = 120;
+                    hp = 150;
                     ataque = 15;
-                    defesa = 5;
-                    mana = 30;
+                    defesa = 10;
+                    mana = 60;
                 }
                 case 2 -> { // Mago
                     classe = "Mago";
                     hp = 100;
-                    ataque = 8;
+                    ataque = 20;
                     defesa = 3;
-                    mana = 100;
+                    mana = 120;
                 }
                 case 3 -> { // Defensor
                     classe = "Defensor";
-                    hp = 150;
-                    ataque = 10;
-                    defesa = 15;
-                    mana = 40;
+                    hp = 200;
+                    ataque = 5;
+                    defesa = 20;
+                    mana = 80;
                 }
                 default -> { // caso inválido
                     System.out.println("Opção inválida! Tente novamente.");
