@@ -32,7 +32,7 @@ public class JogoProgressao {
                     inimigo = new Inimigo(diaAtual.toString(), 20, 4, 5, 10 );
                     break;
                 case ORC:
-                    inimigo = new Inimigo(diaAtual.toString(), 40, 8, 80, 30 );
+                    inimigo = new Inimigo(diaAtual.toString(), 40, 8, 8, 30 );
                     break;
                 case TROLL:
                     inimigo = new Inimigo(diaAtual.toString(), 70, 10, 15, 40 );
@@ -67,11 +67,6 @@ public class JogoProgressao {
         return this.tipoInimigo[numeroAleatorioInimigo];
     }
 
-    // public void inicializarArrays(){
-
-
-    // }
-
     public void batalha(Jogador jogador, Inimigo inimigo){
         jogador.setFugiu(false);
         do {
@@ -103,7 +98,6 @@ public class JogoProgressao {
     }
 
     public void escolherAcao(Jogador jogador, Inimigo inimigo) {
-        Personagem classeJogador = jogador.getClasseObj();
         boolean respostaValida = false;
         int input;
 

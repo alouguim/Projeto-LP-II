@@ -79,7 +79,7 @@ public class Classe{
             return custoMana;
          case DEFENSOR:
             custoMana = Defensor.getCustoMagia();
-
+            return custoMana;
          default:
                throw new IllegalArgumentException("Classe não existente: " + classe);
       }

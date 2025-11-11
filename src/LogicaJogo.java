@@ -181,14 +181,14 @@ public class LogicaJogo {
                     classe = "Mago";
                     hp = 100;
                     ataque = 20;
-                    defesa = 3;
+                    defesa = 5;
                     mana = 120;
                 }
                 case 3 -> { // Defensor
                     classe = "Defensor";
                     hp = 200;
                     ataque = 5;
-                    defesa = 20;
+                    defesa = 15;
                     mana = 80;
                 }
                 default -> { // caso inválido
