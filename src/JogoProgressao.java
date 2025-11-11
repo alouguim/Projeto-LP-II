@@ -5,7 +5,7 @@ public class JogoProgressao {
     private Inimigo inimigo;
     private int dia = 1;
     private String[] tipoEncontro  = {"encontra ","esbarra em ", "passa por ", "tropeça em "};
-    private String[] tipoMotivo = {"não gostar da sua cara ", "motivo nenhum", "estar de mau humor ", "odiar sua existência ", "um rancor do passado "};
+    private String[] tipoMotivo = {"não gostar da sua cara ", "motivo nenhum ", "estar de mau humor ", "odiar sua existência ", "um rancor do passado "};
     private TipoInimigo[] tipoInimigo = {TipoInimigo.GOBLIN,TipoInimigo.LEPRECHAUM,TipoInimigo.ORC,TipoInimigo.TROLL,TipoInimigo.DEMONIO,TipoInimigo.VELHAMALDOSA};
 
 
@@ -78,16 +78,25 @@ public class JogoProgressao {
             LogicaJogo.imprimirCabecalho("Sua ação! Como você ataca?");
             escolherAcao(jogador, inimigo);
             LogicaJogo.insiraAlgoParaContinuar();
+
+            if(inimigo.getHp() <= 0){
+                break;
+            }
             LogicaJogo.imprimirCabecalho("Ação do seu inimigo!");
             inimigo.atacar(jogador, inimigo.getAtaquePadrao());
             LogicaJogo.insiraAlgoParaContinuar();
-        } while (jogador.getHp() > 0 || inimigo.getHp() > 0);
+        } while (jogador.getHp() > 0 && inimigo.getHp() > 0);
         
         if (jogador.getHp() <= 0) {
             LogicaJogo.imprimirCabecalho("Você retornou para o abraço da Deusa..");
             LogicaJogo.insiraAlgoParaContinuar();
             LogicaJogo.menuInicial();
-        } else {
+        }else if(jogador.getFugiu()){
+            LogicaJogo.imprimirCabecalho("Você fugiu da batalha");
+            LogicaJogo.insiraAlgoParaContinuar();
+            LogicaJogo.menuInicial();
+        } 
+        else {
             LogicaJogo.imprimirCabecalho(inimigo.getNome() + " foi enviado de volta para a Deusa! Você vive para ver mais um dia.. ");
         }
     }
@@ -100,7 +109,9 @@ public class JogoProgressao {
         while (!respostaValida) {
             System.out.println("(1) Ataque normal");
             System.out.println("(2) Usar Magia");
-            input = LogicaJogo.lerInt("-> ", 3);
+            System.out.println("(3) Escapar"); 
+
+            input = LogicaJogo.lerInt("-> ",3);
             try {
             switch (input) {
                 case 1:
@@ -108,15 +119,21 @@ public class JogoProgressao {
                     respostaValida = true;
                     break;
                 case 2:
-                    jogador.usarMagia(inimigo, jogador.getNomeMagia(), jogador.getCustoMana(classeJogador));
+                    jogador.usarMagia(inimigo, jogador.getNomeMagia(), jogador.getCustoMana());
+                    respostaValida = true;
+                    break;
+                case 3: 
+                    jogador.fugir();
+                    inimigo.setHp(0);
                     respostaValida = true;
                     break;
                 default:
                     System.out.println("Essa opção não existe!");
             }
-        } catch (Exception e) {
-            System.out.println("Tente novamente!");
-        }
-    } 
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("Tente novamente!");
+            }
+        } 
     }
 }

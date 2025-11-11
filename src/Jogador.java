@@ -3,6 +3,7 @@ import java.util.Map;
 public class Jogador extends Personagem {
 
     private Inventario inventario;
+    private boolean fugiu = false;
     public String[] upgradesAtk = {"Força", "Poder", "Força Divina"};
     public String[] upgradesDef = {"Ossos Pesados", "Passos Rápidos", "Aura Divina"};
     public int numUpgradesAtk;
@@ -17,6 +18,12 @@ public class Jogador extends Personagem {
         this.numUpgradesDef = 0;
         this.classeEscolhida = classeEscolhida;
         Personagem classe = Classe.atribuirClasse(TipoClasse.valueOf(classeEscolhida.toUpperCase()),nome, maxHp,xp,danoAtaque, poderDefesa, mana);
+        for (var entry : classe.getAtaquesFisicos().entrySet()) { 
+            adicionarAtaqueFisico(entry.getKey(), entry.getValue()); 
+        }
+        for (var entry : classe.getMagias().entrySet()) { 
+            adicionarMagia(entry.getKey(), entry.getValue()); 
+        }
         this.classe = classe;
         escolherTraits(this.classe);
     }
@@ -37,9 +44,15 @@ public class Jogador extends Personagem {
         return this.classe;
     }
 
-    public int getCustoMana(Personagem classe){
-        int poderRequisitado = Classe.getCustoMana(TipoClasse.valueOf(classe.toString()));
-        return poderRequisitado;
+    public int getCustoMana() {
+        return Classe.getCustoMana(TipoClasse.valueOf(classeEscolhida.toUpperCase()));
+    }
+
+    public boolean getFugiu() {
+        return fugiu;
+    }
+    public void setFugiu(boolean fugiu) {
+        this.fugiu = fugiu;
     }
 
     public void escolherTraits(Personagem classe) {
@@ -114,4 +127,8 @@ public class Jogador extends Personagem {
         LogicaJogo.insiraAlgoParaContinuar();
     }
 
+    public void fugir() {
+        this.fugiu = true;
+        System.out.println(getNome() + " se prepara para escapar da batalha!");
+    }
 }

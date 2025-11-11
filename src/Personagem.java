@@ -1,4 +1,6 @@
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Collections;
 
 public class Personagem implements java.io.Serializable{
 
@@ -23,6 +25,8 @@ public class Personagem implements java.io.Serializable{
 
         ataquesFisicos = new HashMap<>();
         magias = new HashMap<>();
+
+        adicionarAtaqueFisico("Ataque Básico", 5);
 
     }
 
@@ -53,6 +57,14 @@ public class Personagem implements java.io.Serializable{
 
     public int getMana() {
         return mana;
+    }
+
+    public Map<String, Integer> getAtaquesFisicos() {
+        return Collections.unmodifiableMap(this.ataquesFisicos);
+    }
+
+    public Map<String, Integer> getMagias() {
+        return Collections.unmodifiableMap(this.magias);
     }
 
     //setters
@@ -115,11 +127,21 @@ public class Personagem implements java.io.Serializable{
         magias.put(nome, dano);
     }
 
-    public String getNomeAtaque(){
+    public String getNomeAtaque() {
+        if (ataquesFisicos == null || ataquesFisicos.isEmpty()) {
+            throw new AtaqueInexistenteException(
+                "Este personagem não possui ataques físicos cadastrados."
+            );
+        }
         return ataquesFisicos.keySet().iterator().next();
     }
 
-    public String getNomeMagia(){
+    public String getNomeMagia() {
+        if (magias == null || magias.isEmpty()) {
+            throw new AtaqueInexistenteException(
+                "Este personagem não possui magias cadastradas."
+            );
+        }
         return magias.keySet().iterator().next();
     }
 
