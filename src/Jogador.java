@@ -130,5 +130,9 @@ public class Jogador extends Personagem {
     public void fugir() {
         this.fugiu = true;
         System.out.println(getNome() + " se prepara para escapar da batalha!");
+        this.setHp(this.getHp() + 10);
+        this.setMana(this.getMana() + 10);
+        SavePersonagens.salvarPersonagem(this);
     }
 }
+    

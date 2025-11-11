@@ -73,6 +73,7 @@ public class JogoProgressao {
     // }
 
     public void batalha(Jogador jogador, Inimigo inimigo){
+        jogador.setFugiu(false);
         do {
             LogicaJogo.limparTerminal();
             LogicaJogo.imprimirCabecalho("Sua ação! Como você ataca?");

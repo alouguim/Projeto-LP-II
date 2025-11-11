@@ -32,6 +32,12 @@ public class SavePersonagens {
         salvarBanco(banco);
     }
 
+    public static void salvarPersonagem(Jogador jogador) {
+        HashMap<String, Jogador> banco = carregarBanco();
+        banco.put(jogador.getNome(), jogador);
+        salvarBanco(banco);
+    }
+
     public static Jogador buscarPersonagem(String nome) {
         return carregarBanco().get(nome);
     }
@@ -50,7 +56,11 @@ public class SavePersonagens {
 
         for (Map.Entry<String, Jogador> e : banco.entrySet()) {
             Jogador j = e.getValue();
-            System.out.println("- " + j.getNome() + " (Classe: " + j.getClasseString() + ")");
+            System.out.println("- " + j.getNome() 
+                + " (Classe: " + j.getClasseString() + ")"
+                + " HP: " + j.getHp() + "/" + j.getMaxHp()
+                + " Mana: " + j.getMana()
+            );
         }
     }
 
