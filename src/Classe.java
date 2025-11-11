@@ -8,18 +8,6 @@ public class Classe{
    public String classe;
    public String nome;
 
-   // public Classe(String nome, String classeAtribuida, int maxHp,int xp, int danoAtaque ,int poderDefesa, int mana) {
-   //    this.nome = nome;
-   //    this.maxHp = maxHp;
-   //    this.xp = xp;
-   //    this.danoAtaque = danoAtaque;
-   //    this.poderDefesa = poderDefesa;
-   //    this.mana = mana;
-   //    this.classe = classeAtribuida;
-
-   //    this.atribuirClasse(TipoClasse.valueOf(classeAtribuida.toUpperCase()));
-   // }
-    
    public static Personagem atribuirClasse(TipoClasse classe, String nome, int maxHp, int xp, int danoAtaque, int poderDefesa, int mana) {
       switch (classe) {
          case MAGO:
